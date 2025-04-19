@@ -1,5 +1,5 @@
 # jalv_plugin_loader
-GUI to open lv2 plugins using jalv
+Linux GUI to open lv2 plugins using jalv
 
 ## Requirements
 
