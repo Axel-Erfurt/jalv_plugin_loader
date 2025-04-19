@@ -166,9 +166,21 @@ class Window(Gtk.ApplicationWindow):
             cmd = ["jalv.qt5", url]
         print(cmd)
         
-        r = GLib.spawn_async(cmd, flags=GLib.SPAWN_DO_NOT_REAP_CHILD | GLib.SpawnFlags.SEARCH_PATH, 
+        try:
+            r = GLib.spawn_async(cmd, flags=GLib.SPAWN_DO_NOT_REAP_CHILD | GLib.SpawnFlags.SEARCH_PATH, 
                              standard_output=True, standard_error=True)
-        print(r)         
+        except GLib.Error as err:
+            print("Error:", err.message)
+            dialog = Gtk.MessageDialog(
+                flags=0,
+                title="Plugin Loader Error", 
+                message_type=Gtk.MessageType.INFO,
+                buttons=Gtk.ButtonsType.OK,
+                text=err.message)
+            dialog.run()
+            print("Error dialog closed")
+
+            dialog.destroy()        
         
     def show_info(self, view, path):
         self.plugin_name = self.model[path][0]
